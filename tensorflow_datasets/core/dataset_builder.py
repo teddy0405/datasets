@@ -839,6 +839,7 @@ class DatasetBuilder(registered.RegisteredDataset):
       builder_config = self.BUILDER_CONFIGS[0]
       logging.info("No config specified, defaulting to first: %s/%s", self.name,
                    builder_config.name)
+      print(self.BUILDER_CONFIGS, '*'*20)
     if not builder_config:
       return None
     if isinstance(builder_config, six.string_types):
