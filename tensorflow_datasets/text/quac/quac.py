@@ -91,17 +91,22 @@ class Quac(tfds.core.GeneratorBasedBuilder):
     """Returns SplitGenerator."""
 
     train_dir = dl_manager.download_and_extract(
-        os.path.join(_DATA_URL, "train_v0.2.json"))
+        _DATA_URL + "train_v0.2.json")
     val_dir = dl_manager.download_and_extract(
-        os.path.join(_DATA_URL, "val_v0.2.json"))
+        _DATA_URL + "val_v0.2.json")
+
+    if tf.io.gfile.isdir(train_dir):
+      train_dir = os.path.join(train_dir, "train_v0.2.json")
+    if tf.io.gfile.isdir(val_dir):
+      val_dir = os.path.join(val_dir, "val_v0.2.json")
 
     return {
         "train":
             self._generate_examples(
-                filepath=os.path.join(train_dir, "train_v0.2.json")),
+                filepath=train_dir),
         "validation":
             self._generate_examples(
-                filepath=os.path.join(val_dir, "val_v0.2.json"))
+                filepath=val_dir)
     }
 
   def _generate_examples(self, filepath):
